@@ -62,30 +62,38 @@
             box-shadow: 0 1px 2px rgba(30, 20, 10, 0.03);
         }
 
-        .card-index {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            color: #8a7e6c;
-            text-transform: uppercase;
-            margin-bottom: 6px;
+        .card-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
         .card-meta {
             font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-            font-size: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            word-break: break-all;
+        }
+
+        .card-index {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
             color: #8a7e6c;
-            margin: 0 0 10px 0;
-            letter-spacing: 0.03em;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .card-placement {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin: 0 0 14px 0;
-            letter-spacing: 0.01em;
+            font-size: 13px;
+            font-weight: 500;
+            color: #6b6459;
+            margin: 0 0 12px 0;
+            letter-spacing: 0.02em;
             word-break: break-word;
         }
 
@@ -336,12 +344,12 @@
                     var card = document.createElement('section');
                     card.className = 'card';
 
-                    if (items.length > 1) {
-                        var indexTag = document.createElement('div');
-                        indexTag.className = 'card-index';
-                        indexTag.textContent = '第 ' + (idx + 1) + ' / ' + items.length + ' 条';
-                        card.appendChild(indexTag);
-                    }
+                    // Top row: product_id + fabric_code on the left (primary
+                    // identifier, larger), multi-monogram counter on the right
+                    // (secondary, muted). Kept apart so the factory can read
+                    // the garment ID cleanly without scanning past the counter.
+                    var topRow = document.createElement('div');
+                    topRow.className = 'card-top-row';
 
                     if (productId || fabricCode) {
                         var metaParts = [];
@@ -350,7 +358,18 @@
                         var metaEl = document.createElement('div');
                         metaEl.className = 'card-meta';
                         metaEl.textContent = metaParts.join(' · ');
-                        card.appendChild(metaEl);
+                        topRow.appendChild(metaEl);
+                    }
+
+                    if (items.length > 1) {
+                        var indexTag = document.createElement('div');
+                        indexTag.className = 'card-index';
+                        indexTag.textContent = '第 ' + (idx + 1) + ' / ' + items.length + ' 条';
+                        topRow.appendChild(indexTag);
+                    }
+
+                    if (topRow.childNodes.length > 0) {
+                        card.appendChild(topRow);
                     }
 
                     var placementEl = document.createElement('h2');
