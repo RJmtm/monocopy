@@ -72,6 +72,14 @@
             margin-bottom: 6px;
         }
 
+        .card-meta {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 12px;
+            color: #8a7e6c;
+            margin: 0 0 10px 0;
+            letter-spacing: 0.03em;
+        }
+
         .card-placement {
             font-size: 16px;
             font-weight: 600;
@@ -322,6 +330,8 @@
                     var text = (item && typeof item.text === 'string') ? item.text : '';
                     if (!text) return; // skip empty entries defensively
                     var placement = (item && typeof item.placement === 'string') ? item.placement.trim() : '';
+                    var productId = (item && typeof item.product_id === 'string') ? item.product_id.trim() : '';
+                    var fabricCode = (item && typeof item.fabric_code === 'string') ? item.fabric_code.trim() : '';
 
                     var card = document.createElement('section');
                     card.className = 'card';
@@ -331,6 +341,16 @@
                         indexTag.className = 'card-index';
                         indexTag.textContent = '第 ' + (idx + 1) + ' / ' + items.length + ' 条';
                         card.appendChild(indexTag);
+                    }
+
+                    if (productId || fabricCode) {
+                        var metaParts = [];
+                        if (productId) metaParts.push(productId);
+                        if (fabricCode) metaParts.push(fabricCode);
+                        var metaEl = document.createElement('div');
+                        metaEl.className = 'card-meta';
+                        metaEl.textContent = metaParts.join(' · ');
+                        card.appendChild(metaEl);
                     }
 
                     var placementEl = document.createElement('h2');
