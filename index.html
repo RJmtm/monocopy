@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="robots" content="noindex,nofollow">
     <meta name="referrer" content="no-referrer">
-    <meta name="theme-color" content="#faf7f2">
+    <meta name="theme-color" content="#0E1B33">
     <title>复制刺绣文字</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; }
@@ -17,88 +17,98 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background: #faf7f2;
-            color: #1a1a1a;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "WenQuanYi Micro Hei", Arial, sans-serif;
+            background: #F5F7FB;
+            color: #0E1B33;
             line-height: 1.5;
             min-height: 100vh;
             min-height: 100dvh;
-            padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+            display: flex;
+            flex-direction: column;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        main {
-            max-width: 520px;
-            margin: 0 auto;
+        /* ---- Top app header bar (full-width, navy) ---- */
+        .app-header {
+            flex: 0 0 auto;
+            background: linear-gradient(160deg, #1E3A5F 0%, #0E1B33 90%);
+            padding: calc(15px + env(safe-area-inset-top)) 20px 15px;
+            text-align: center;
+            box-shadow: 0 1px 2px rgba(14, 27, 51, 0.05);
         }
 
-        .page-header {
-            margin: 8px 0 28px 0;
-            text-align: left;
-        }
-
-        .page-title {
+        .app-title {
             font-size: 22px;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            margin: 0 0 6px 0;
-            color: #1a1a1a;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin: 0;
+            color: #ffffff;
         }
 
-        .page-sub {
-            font-size: 13px;
-            color: #6b6459;
-            margin: 0;
-            letter-spacing: 0.02em;
+        /* ---- Centered content area ---- */
+        .app-main {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            width: 100%;
+            padding: 28px max(20px, env(safe-area-inset-right)) max(36px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
         }
 
         .card {
+            width: 100%;
+            max-width: 360px;
             background: #ffffff;
-            border: 1px solid #ece6db;
-            border-radius: 14px;
-            padding: 20px 20px 22px 20px;
-            margin-bottom: 18px;
-            box-shadow: 0 1px 2px rgba(30, 20, 10, 0.03);
-        }
-
-        .card-top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-
-        .card-meta {
-            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a1a;
-            letter-spacing: 0.02em;
-            word-break: break-all;
+            border: 1px solid #E7EBF3;
+            border-radius: 16px;
+            padding: 30px 24px 26px 24px;
+            box-shadow: 0 1px 2px rgba(14, 27, 51, 0.05);
+            text-align: center;
         }
 
         .card-index {
             font-size: 11px;
             font-weight: 500;
             letter-spacing: 0.04em;
-            color: #8a7e6c;
-            white-space: nowrap;
-            flex-shrink: 0;
+            color: #8593A8;
+            margin: 0 0 16px 0;
+        }
+
+        /* Stacked identifier lines — each on its own padded row */
+        .card-oid {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0E1B33;
+            letter-spacing: 0.02em;
+            word-break: break-all;
+            margin: 0;
+        }
+
+        .card-fabric {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0E1B33;
+            letter-spacing: 0.02em;
+            word-break: break-all;
+            margin: 12px 0 0 0;
         }
 
         .card-placement {
             font-size: 13px;
             font-weight: 500;
-            color: #6b6459;
-            margin: 0 0 12px 0;
+            color: #64748B;
             letter-spacing: 0.02em;
             word-break: break-word;
+            margin: 16px 0 0 0;
         }
 
         .card-placement .placement-fallback {
-            color: #8a7e6c;
+            color: #8593A8;
             font-weight: 500;
         }
 
@@ -107,12 +117,13 @@
             font-size: 30px;
             font-weight: 500;
             line-height: 1.35;
-            color: #1a1a1a;
-            background: #f5f0e6;
-            border: 1px solid #e6dfd1;
+            color: #0E1B33;
+            background: #ECF0F7;
+            border: 1px solid #DDE3EF;
             border-radius: 10px;
-            padding: 18px 16px;
-            margin: 0 0 16px 0;
+            padding: 22px 16px;
+            margin: 24px 0 0 0;
+            text-align: center;
             word-break: break-all;
             white-space: pre-wrap;
             letter-spacing: 0.01em;
@@ -122,15 +133,15 @@
         }
 
         .text-block.highlight {
-            background: #fdf3e3;
-            border-color: #b8693a;
-            box-shadow: 0 0 0 3px rgba(184, 105, 58, 0.18);
+            background: #E4EAF5;
+            border-color: #1E3A5F;
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.18);
             animation: pulse 1.6s ease-in-out 2;
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 3px rgba(184, 105, 58, 0.18); }
-            50%      { box-shadow: 0 0 0 6px rgba(184, 105, 58, 0.28); }
+            0%, 100% { box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.18); }
+            50%      { box-shadow: 0 0 0 6px rgba(30, 58, 95, 0.28); }
         }
 
         .copy-btn {
@@ -140,88 +151,87 @@
             width: 100%;
             min-height: 52px;
             padding: 14px 20px;
+            margin: 22px 0 0 0;
             font-family: inherit;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 0.02em;
             color: #ffffff;
-            background: #b8693a;
-            border: 1px solid #a35a2f;
-            border-radius: 999px;
+            background: linear-gradient(160deg, #1E3A5F 0%, #0E1B33 90%);
+            border: 0;
+            border-radius: 14px;
+            box-shadow: 0 8px 18px rgba(14, 27, 51, 0.20);
             cursor: pointer;
-            transition: background-color 0.15s ease, transform 0.1s ease, color 0.2s ease;
+            transition: background-color 0.15s ease, transform 0.1s ease, color 0.2s ease, box-shadow 0.2s ease;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
         }
 
         .copy-btn:hover {
-            background: #a35a2f;
+            background: linear-gradient(160deg, #17304f 0%, #0a1526 90%);
         }
 
         .copy-btn:active {
-            background: #8e4d27;
+            background: linear-gradient(160deg, #12283f 0%, #080f1c 90%);
             transform: scale(0.985);
         }
 
         .copy-btn:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(184, 105, 58, 0.3);
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.30);
         }
 
         .copy-btn.copied {
-            background: #2f6d4a;
-            border-color: #285e3f;
+            background: #1B7A54;
+            border-color: #1B7A54;
             color: #ffffff;
+            box-shadow: 0 8px 18px rgba(27, 122, 84, 0.20);
         }
 
         .copy-btn.manual {
-            background: #ffffff;
-            color: #1a1a1a;
-            border: 1px solid #1a1a1a;
-            font-weight: 600;
+            background: #F5F7FB;
+            color: #0E1B33;
+            border: 1px solid #DDE3EF;
+            box-shadow: none;
+            font-weight: 700;
         }
 
         .state-box {
+            width: 100%;
+            max-width: 360px;
             text-align: center;
-            padding: 48px 20px;
-            margin-top: 24px;
+            padding: 48px 24px;
             background: #ffffff;
-            border: 1px dashed #d8cfbe;
-            border-radius: 14px;
+            border: 1px dashed #DDE3EF;
+            border-radius: 16px;
         }
 
         .state-box-title {
             font-size: 17px;
-            font-weight: 600;
+            font-weight: 700;
             margin: 0 0 8px 0;
-            color: #1a1a1a;
+            color: #0E1B33;
         }
 
         .state-box-sub {
             font-size: 13px;
-            color: #6b6459;
+            color: #64748B;
             margin: 0;
             letter-spacing: 0.01em;
         }
 
-        .footer {
-            margin-top: 32px;
-            text-align: center;
-            font-size: 11px;
-            color: #a79c88;
-            letter-spacing: 0.04em;
-        }
-
-        /* Prevent iOS zoom-on-tap for buttons by keeping font-size >= 16px.
-           Also keep .text-block tap-target comfortable. */
+        /* Keep font-size >= 16px on buttons to prevent iOS zoom-on-tap. */
         @media (max-width: 360px) {
-            .text-block { font-size: 26px; padding: 16px 14px; }
-            .page-title { font-size: 20px; }
+            .text-block { font-size: 26px; padding: 20px 14px; }
+            .app-title { font-size: 20px; }
         }
     </style>
 </head>
 <body>
-    <main id="app" aria-live="polite">
+    <header class="app-header">
+        <h1 class="app-title">复制刺绣文字</h1>
+    </header>
+    <main id="app" class="app-main" aria-live="polite">
         <!-- Populated by JS -->
     </main>
     <script>
@@ -279,25 +289,8 @@
                 return JSON.parse(json);
             }
 
-            function renderHeader(titleText, subText) {
-                var header = document.createElement('header');
-                header.className = 'page-header';
-                var h1 = document.createElement('h1');
-                h1.className = 'page-title';
-                h1.textContent = titleText;
-                header.appendChild(h1);
-                if (subText) {
-                    var p = document.createElement('p');
-                    p.className = 'page-sub';
-                    p.textContent = subText;
-                    header.appendChild(p);
-                }
-                return header;
-            }
-
             function renderEmpty(root) {
                 root.innerHTML = '';
-                root.appendChild(renderHeader('复制刺绣文字', '扫码后将显示刺绣文字与复制按钮'));
                 var box = document.createElement('div');
                 box.className = 'state-box';
                 var title = document.createElement('p');
@@ -305,7 +298,7 @@
                 title.textContent = '未找到刺绣文字数据';
                 var sub = document.createElement('p');
                 sub.className = 'state-box-sub';
-                sub.textContent = '请检查二维码 · No monogram data';
+                sub.textContent = '请检查二维码';
                 box.appendChild(title);
                 box.appendChild(sub);
                 root.appendChild(box);
@@ -313,7 +306,6 @@
 
             function renderError(root) {
                 root.innerHTML = '';
-                root.appendChild(renderHeader('复制刺绣文字', '扫码后将显示刺绣文字与复制按钮'));
                 var box = document.createElement('div');
                 box.className = 'state-box';
                 var title = document.createElement('p');
@@ -321,7 +313,7 @@
                 title.textContent = '二维码数据无法读取';
                 var sub = document.createElement('p');
                 sub.className = 'state-box-sub';
-                sub.textContent = '请重新扫描订单单据上的二维码 · Unable to read QR data';
+                sub.textContent = '请重新扫描订单单据上的二维码';
                 box.appendChild(title);
                 box.appendChild(sub);
                 root.appendChild(box);
@@ -329,10 +321,6 @@
 
             function renderCards(root, items) {
                 root.innerHTML = '';
-                var subText = items.length > 1
-                    ? '共 ' + items.length + ' 条 · 点击按钮复制 · Tap to copy'
-                    : '点击按钮复制文字 · Tap to copy';
-                root.appendChild(renderHeader('复制刺绣文字', subText));
 
                 items.forEach(function (item, idx) {
                     var text = (item && typeof item.text === 'string') ? item.text : '';
@@ -344,32 +332,27 @@
                     var card = document.createElement('section');
                     card.className = 'card';
 
-                    // Top row: product_id + fabric_code on the left (primary
-                    // identifier, larger), multi-monogram counter on the right
-                    // (secondary, muted). Kept apart so the factory can read
-                    // the garment ID cleanly without scanning past the counter.
-                    var topRow = document.createElement('div');
-                    topRow.className = 'card-top-row';
-
-                    if (productId || fabricCode) {
-                        var metaParts = [];
-                        if (productId) metaParts.push(productId);
-                        if (fabricCode) metaParts.push(fabricCode);
-                        var metaEl = document.createElement('div');
-                        metaEl.className = 'card-meta';
-                        metaEl.textContent = metaParts.join(' · ');
-                        topRow.appendChild(metaEl);
-                    }
-
+                    // Multi-monogram counter (only when more than one) — muted, above the meta.
                     if (items.length > 1) {
                         var indexTag = document.createElement('div');
                         indexTag.className = 'card-index';
                         indexTag.textContent = '第 ' + (idx + 1) + ' / ' + items.length + ' 条';
-                        topRow.appendChild(indexTag);
+                        card.appendChild(indexTag);
                     }
 
-                    if (topRow.childNodes.length > 0) {
-                        card.appendChild(topRow);
+                    // Identifier lines, each stacked on its own padded row:
+                    // order id (prominent), then fabric code below it.
+                    if (productId) {
+                        var oidEl = document.createElement('div');
+                        oidEl.className = 'card-oid';
+                        oidEl.textContent = productId;
+                        card.appendChild(oidEl);
+                    }
+                    if (fabricCode) {
+                        var fabricEl = document.createElement('div');
+                        fabricEl.className = 'card-fabric';
+                        fabricEl.textContent = fabricCode;
+                        card.appendChild(fabricEl);
                     }
 
                     var placementEl = document.createElement('h2');
@@ -395,8 +378,8 @@
                     var btn = document.createElement('button');
                     btn.className = 'copy-btn';
                     btn.type = 'button';
-                    btn.textContent = '复制 / Copy';
-                    btn.setAttribute('data-default-label', '复制 / Copy');
+                    btn.textContent = '复制';
+                    btn.setAttribute('data-default-label', '复制');
                     btn.addEventListener('click', function () {
                         copyToClipboard(text, btn, textBlock);
                     });
@@ -409,10 +392,10 @@
             function markCopied(btn) {
                 btn.classList.remove('manual');
                 btn.classList.add('copied');
-                btn.textContent = '\u2713 已复制 / Copied';
+                btn.textContent = '✓ 已复制';
                 setTimeout(function () {
                     btn.classList.remove('copied');
-                    btn.textContent = btn.getAttribute('data-default-label') || '复制 / Copy';
+                    btn.textContent = btn.getAttribute('data-default-label') || '复制';
                 }, 2000);
             }
 
